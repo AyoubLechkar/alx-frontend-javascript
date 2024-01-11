@@ -1,16 +1,45 @@
-function printTeacher(firstName, lastName) {
-    return "".concat(firstName[0], ". ").concat(lastName);
+interface Teacher {
+    readonly firstName: string;
+    readonly lastName: string;
+    fullTimeEmployee: boolean;
+    yearsOfExperience: number;
+    location: string;
+    [key: string]: any;
 }
-var StudentClass = /** @class */ (function () {
-    function StudentClass(firstName, lastName) {
+
+interface Directors extends Teacher {
+    numberOfReports: number;
+}
+
+function printTeacher(firstName: string, lastName: string) {
+    return `${firstName[0]}. ${lastName}`
+}
+
+interface printTeacherFunction {
+    firstName: string;
+    lastName: string;
+}
+
+interface classInterface {
+    firstName: string;
+    lastName: string;
+    workOnHomework(): string;
+    displayName(): string;
+}
+
+class StudentClass implements classInterface {
+    firstName: string;
+    lastName: string;
+    
+    constructor(firstName: string, lastName: string){
         this.firstName = firstName;
         this.lastName = lastName;
+        
     }
-    StudentClass.prototype.workOnHomework = function () {
+    workOnHomework() {
         return 'Currently working';
-    };
-    StudentClass.prototype.displayName = function () {
-        return "".concat(this.firstName);
-    };
-    return StudentClass;
-}());
+    }
+    displayName() {
+        return `${this.firstName}`
+    }
+}

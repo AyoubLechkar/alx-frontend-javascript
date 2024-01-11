@@ -1,65 +1,79 @@
-"use strict";
-exports.__esModule = true;
-exports.teachClass = void 0;
-var Director = /** @class */ (function () {
-    function Director() {
-    }
-    Director.prototype.workFromHome = function () {
+interface DirectorInterface {
+    workFromHome(): string;
+    getCoffeeBreak(): string;
+    workDirectorTasks(): string;
+}
+
+interface TeacherInterface {
+    workFromHome(): string;
+    getCoffeeBreak(): string;
+    workTeacherTasks(): string;
+}
+
+class Director implements DirectorInterface {
+    workFromHome(): string {
         return 'Working from home';
-    };
-    Director.prototype.getCoffeeBreak = function () {
-        return 'Getting a coffee break';
-    };
-    Director.prototype.workDirectorTasks = function () {
-        return 'Getting to director tasks';
-    };
-    return Director;
-}());
-var Teacher = /** @class */ (function () {
-    function Teacher() {
     }
-    Teacher.prototype.workFromHome = function () {
+
+    getCoffeeBreak(): string {
+        return 'Getting a coffee break';
+    }
+
+    workDirectorTasks(): string {
+        return 'Getting to director tasks';
+    }
+}
+
+class Teacher implements TeacherInterface {
+    workFromHome(): string {
         return 'Cannot work from home';
-    };
-    Teacher.prototype.getCoffeeBreak = function () {
+    }
+
+    getCoffeeBreak(): string {
         return 'Cannot have a break';
-    };
-    Teacher.prototype.workTeacherTasks = function () {
+    }
+
+    workTeacherTasks(): string {
         return 'Getting to work';
-    };
-    return Teacher;
-}());
-function createEmployee(salary) {
+    }
+}
+
+function createEmployee (salary: number | string) {
     if (typeof salary === 'number' && salary < 500) {
         return new Teacher();
-    }
-    else {
+    } else {
         return new Director();
     }
 }
+
 console.log(createEmployee(200));
 console.log(createEmployee(1000));
 console.log(createEmployee('$500'));
-function isDirector(employee) {
+
+function isDirector(employee: Director | Teacher): employee is Director {
     return (employee instanceof Director) ? true : false;
 }
 // Funtion to check type of employee and establish the correct task
-function executeWork(employee) {
+function executeWork(employee: Director | Teacher): string {
     return isDirector(employee) ? employee.workDirectorTasks() : employee.workTeacherTasks();
 }
+
 console.log(executeWork(createEmployee(200)));
 console.log(executeWork(createEmployee(1000)));
-function teachClass(todayClass) {
-    if (todayClass === "Math") {
+
+// Write a String literal type named Subjects allowing a variable to have the value Math or History only.
+// Write a function named teachClass:
+
+type Subjects = "Math" | "History";
+export function teachClass(todayClass: string) {
+    if (todayClass === "Math" ) {
         return "Teaching Math";
-    }
-    else if (todayClass === "History") {
+    } else if (todayClass === "History") {
         return "Teaching History";
-    }
-    else {
+    } else {
         return "";
     }
 }
-exports.teachClass = teachClass;
+
 console.log(teachClass('Math'));
 console.log(teachClass('History'));
